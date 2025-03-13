@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love Login</title>
+    <link rel="icon" type="image/png" href="images/love image.png">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Video Background for Login */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            display: block; /* Ensure it's visible at the start */
+        }
+
+        /* Video Background for Logged-in */
+        .video-background-loggedin {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            display: none;
+        }
+        /* Glassmorphic Login Container */
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.15);
+            padding: 35px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0px 4px 15px rgba(255, 77, 109, 0.4);
+            width: 350px;
+            text-align: center;
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+        }
+
+        /* Floating Animation */
+        .login-container:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0px 6px 20px rgba(255, 77, 109, 0.6);
+        }
+
+        /* Login Header */
+        .login-container h2 {
+            color: #ff4d6d;
+            font-size: 28px;
+            font-family: 'Italic', cursive;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        /* Input Fields */
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid rgba(255, 77, 109, 0.5);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Placeholder Text */
+        .login-container input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Input Glow on Focus */
+        .login-container input:focus {
+            border-color: #ff1a4c;
+            box-shadow: 0px 0px 12px rgba(255, 77, 109, 0.8);
+        }
+
+        /* Animated Login Button */
+        .login-container button {
+            width: 50%;
+            padding: 10px;
+            background: linear-gradient(45deg, #ff4d6d, #ff1a4c);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.4s ease-in-out, transform 0.3s ease-in-out;
+            box-shadow: 0px 4px 8px rgba(255, 77, 109, 0.5);
+        }
+
+        .login-container button:hover {
+            background: linear-gradient(45deg, #ff1a4c, #ff4d6d);
+            transform: scale(1.1);
+            box-shadow: 0px 6px 15px rgba(255, 77, 109, 0.7);
+        }
+
+
+        .gallery h2 {
+            font-family: 'Italic', cursive; /* Ancient font style */
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        /* Image Gallery Container */
+        #image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 90px;
+            max-width: 100%;
+            overflow-y: auto;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* 🎁 Gift Box Style */
+        .image-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 200px;
+            height: 280px;
+            padding: 15px;
+            background: #f8d7da;
+            border: 5px solid #ff4d6d;
+            border-radius: 10px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s ease-in-out, height 0.4s ease-in-out;
+        }
+
+        /* 🎀 Ribbon Effect */
+        .image-container::before {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            width: 100px;
+            height: 25px;
+            background: #ff4d6d;
+            border-radius: 5px;
+            transform: translateX(-50%);
+        }
+
+        .image-container::after {
+            content: "";
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            background: #ff1a4c;
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Image Inside the Gift Box */
+        .image-container img {
+            width: 140px;
+            height: 190px;
+            object-fit: contain;
+            transition: transform 0.6s ease-in-out, opacity 0.3s ease-in-out;
+            border-radius: 5px;
+        }
+
+        /* 🎁 Adjust Gift Box & Image on Hover */
+        .image-container:hover {
+            transform: scale(1.1);
+            height: 320px;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.5);
+        }
+
+        /* Blur other images when hovering on one */
+        .image-container:not(:hover) img {
+            filter: blur(2px) brightness(1.2);
+            opacity: 0.9;
+        }
+
+        /* Logout Button */
+        .logout-button {
+            width: 220px;
+            padding: 12px 22px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+            margin-top: 20px;
+        }
+
+        .logout-button:hover {
+            background: #ff1a4c;
+        }
+
+        /* Secret Message Button - Enhanced visibility */
+        .secret-message-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ff4d6d, #ff1a4c);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 1; /* Always visible now */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0px 4px 12px rgba(255, 77, 109, 0.7);
+            z-index: 2;
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* Modified: Make heart icon in button more visible */
+        .secret-message-btn .heart-icon {
+            background-color: transparent;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .secret-message-btn .heart-icon:before,
+        .secret-message-btn .heart-icon:after {
+            background-color: white; /* Changed to white for better visibility */
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(255, 77, 109, 0.7); }
+            50% { box-shadow: 0 0 20px rgba(255, 77, 109, 1); }
+            100% { box-shadow: 0 0 10px rgba(255, 77, 109, 0.7); }
+        }
+
+        .secret-message-btn:hover {
+            background: linear-gradient(45deg, #ff1a4c, #ff4d6d);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        /* Love Message Modal - MODIFIED: Darker background */
+        .love-message-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Darker background */
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Ribbon Unwrapping Effect Container */
+        .ribbon-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            height: 400px;
+            perspective: 1000px;
+            margin-bottom: 50px;
+        }
+
+        .ribbon-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #f8d7da;
+            border: 5px solid #ff4d6d;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.6);
+            transform-style: preserve-3d;
+            transition: transform 1.5s;
+        }
+
+        .ribbon-box.unwrapped {
+            transform: rotateX(180deg);
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        .ribbon-box-front,
+        .ribbon-box-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .ribbon-box-front {
+            background: #f8d7da;
+            transform: rotateX(0deg);
+        }
+
+        /* MODIFIED: Enhanced back panel for better message visibility */
+        .ribbon-box-back {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            transform: rotateX(180deg);
+            padding: 30px;
+            border: 3px solid #ff4d6d;
+            /* Added glowing effect after unwrapping */
+            box-shadow: 0 0 30px rgba(255, 77, 109, 0.8);
+            animation: glow-effect 2s infinite alternate;
+        }
+
+        /* Added: Glowing animation for the message box */
+        @keyframes glow-effect {
+            from { box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); }
+            to { box-shadow: 0 0 40px rgba(255, 77, 109, 0.9); }
+        }
+
+        /* Ribbon on the gift box */
+        .ribbon {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+            z-index: 2;
+        }
+
+        .ribbon-vertical {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 100%;
+            background: #ff4d6d;
+            z-index: 1;
+        }
+
+        .ribbon-horizontal {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 30px;
+            background: #ff4d6d;
+            z-index: 1;
+        }
+
+        .ribbon-knot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: #ff1a4c;
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 0 20px rgba(255, 26, 76, 0.8);
+        }
+
+        .unwrap-text {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff1a4c;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+            animation: pulse-text 1.5s infinite;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .message-image {
+            width: 180px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 3px solid #ff4d6d;
+            margin-bottom: 20px;
+            transition: transform 0.5s;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+        }
+
+        .message-image:hover {
+            transform: scale(1.1);
+        }
+
+        /* MODIFIED: Enhanced love message visibility */
+        .love-message {
+            font-family: 'Great Vibes', cursive;
+            font-size: 24px;
+            color: white;
+            margin: 20px 0;
+            line-height: 1.5;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            min-height: 100px; /* Ensures consistent height during typing animation */
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 90%;
+        }
+
+        /* Typing cursor animation */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 24px;
+            background-color: white;
+            margin-left: 2px;
+            vertical-align: middle;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .close-message {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-message:hover {
+            transform: scale(1.2);
+            color: #ff4d6d;
+        }
+
+        /* NEW: Front close button styles */
+        .close-message-front {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            color: #ff1a4c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 5;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-message-front:hover {
+            transform: scale(1.2);
+            color: #ff4d6d;
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #ff4d6d;
+            opacity: 0.7;
+            z-index: 99;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Heart Animation */
+        .floating-heart {
+            position: absolute;
+            font-size: 30px;
+            color: #ff4d6d;
+            z-index: 99;
+            animation: float-up linear forwards;
+            opacity: 0.8;
+        }
+
+        @keyframes float-up {
+            to {
+                transform: translateY(-100vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* CSS heart - MODIFIED for better visibility */
+        .heart-icon {
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            height: 18px;
+            margin: 0 5px;
+            vertical-align: middle;
+        }
+        
+        .heart-icon:before,
+        .heart-icon:after {
+            position: absolute;
+            content: "";
+            left: 10px;
+            top: 0;
+            width: 10px;
+            height: 16px;
+            background: #ff4d6d;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .heart-icon:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* New style for pure black background when typing */
+        .typing-mode .ribbon-box-back {
+            background: #000000;
+            border: none;
+        }
+
+        .typing-mode .ribbon-box {
+            background: transparent;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video Background (Login Page) -->
+    <video autoplay loop muted class="video-background" id="login-video">
+        <source src="images/login.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Video Background (After Login) -->
+    <video autoplay loop muted class="video-background-loggedin" id="loggedin-video">
+        <source src="images/videoplayback.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Login Form -->
+    <div class="login-container" id="login-container">
+        <h2>Welcome, KANNA <span class="heart-icon"></span></h2>
+        <input type="text" id="username" placeholder="Enter Your Name">
+        <input type="password" id="password" placeholder="Enter Secret Code">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Gallery Section -->
+    <div class="gallery" id="gallery">
+        <h2>Our Love In 10 Frames <span class="heart-icon"></span></h2>
+        <div id="image-gallery"></div>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Love Message Modal with Ribbon Unwrapping Effect -->
+    <div class="love-message-modal" id="love-message-modal">
+        <div class="ribbon-container" id="ribbon-container">
+            <div class="ribbon-box" id="ribbon-box">
+                <div class="ribbon-box-front">
+                    <!-- NEW: Added close button to the front side -->
+                    <button class="close-message-front" onclick="closeMessage()">&times;</button>
+                    <div class="ribbon">
+                        <div class="ribbon-vertical"></div>
+                        <div class="ribbon-horizontal"></div>
+                        <div class="ribbon-knot"></div>
+                    </div>
+                    <img id="modal-image-front" class="message-image" src="" alt="Love Memory">
+                    <div class="unwrap-text">Click to unwrap your love message</div>
+                </div>
+                <div class="ribbon-box-back">
+                    <button class="close-message" onclick="closeMessage()">&times;</button>
+                    <img id="modal-image-back" class="message-image" src="" alt="Love Memory">
+                    <div class="love-message" id="love-message"></div>
+                    <span class="typing-cursor" id="typing-cursor"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Define our love data with paired images and messages
+        const loveData = [
+            {
+                image: 'images/image1.jpeg',
+                message: "<span class='heart-icon'></span> Every moment spent with you feels like a beautiful dream that I never want to wake up from. Your smile brightens even my darkest days. I cherish every memory we create together. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image2.jpeg',
+                message: "<span class='heart-icon'></span> Your love has transformed my life in ways I never thought possible. When I look into your eyes, I see my forever. You are my greatest blessing and my eternal love. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image3.jpeg',
+                message: "<span class='heart-icon'></span> The day we met changed everything. Your kindness, your laughter, your spirit - they've all become essential parts of my world. I fall in love with you more each day. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image4.jpeg',
+                message: "<span class='heart-icon'></span> In your arms is where I belong. Your heart is my home, your love is my strength. I promise to stand by you through every storm and celebrate every sunshine. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image5.jpeg',
+                message: "<span class='heart-icon'></span> Life with you is like a beautiful adventure - full of joy, wonder, and endless possibilities. Thank you for loving me unconditionally and making every day special. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image6.jpeg',
+                message: "<span class='heart-icon'></span> You are the melody to my lyrics, the sunshine to my rainy days. Our love story is my favorite, and I'm grateful that we're writing it together, one beautiful page at a time. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image7.jpeg',
+                message: "<span class='heart-icon'></span> When I think about all the reasons I love you, I'm overwhelmed by the endless list. Your touch, your voice, your heart - everything about you captivates me completely. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image8.jpeg',
+                message: "<span class='heart-icon'></span> The way you look at me still gives me butterflies. The sound of your laughter is my favorite melody. I thank the universe every day for bringing you into my life. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image9.jpeg',
+                message: "<span class='heart-icon'></span> In this vast universe, our souls found each other. That's not coincidence, that's destiny. You're the missing piece that makes my life complete. I love you endlessly. <span class='heart-icon'></span>"
+            },
+            {
+                image: 'images/image10.jpeg',
+                message: "<span class='heart-icon'></span> With every heartbeat, I love you more. You've shown me what true love means - patient, kind, and beautiful. I promise to cherish and adore you all the days of my life. <span class='heart-icon'></span>"
+            }
+        ];
+
+        // Initialize both screens to not display to prevent flashing
+        document.addEventListener("DOMContentLoaded", function() {
+            // Hide both views initially
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('gallery').style.display = 'none';
+            
+            // Check login state
+            checkLoginState();
+        });
+
+        // Variable to track current typing animation
+        let currentTypingTimeout = null;
+        
+        function login() {
+            let username = document.getElementById('username').value.trim();
+            let password = document.getElementById('password').value;
+
+            if (username !== "mylove") {
+                alert('Incorrect username! Try again.');
+                return;
+            }
+
+            if (password !== "love123") {
+                alert('Wrong Secret Code! Try Again');
+                return;
+            }
+
+            sessionStorage.setItem("loggedIn", "true");
+            showGallery();
+        }
+
+        function logout() {
+            sessionStorage.removeItem("loggedIn");
+            showLogin();
+        }
+
+        function checkLoginState() {
+            // Check login status from sessionStorage
+            let isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+            
+            if (isLoggedIn) {
+                showGallery();
+            } else {
+                showLogin();
+            }
+        }
+
+        function showGallery() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('gallery').style.display = 'flex';
+            document.getElementById('login-video').style.display = 'none';
+            document.getElementById('loggedin-video').style.display = 'block';
+            
+            // Load gallery images if not already loaded
+            if (document.getElementById('image-gallery').children.length === 0) {
+                loadGalleryImages();
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('gallery').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('login-video').style.display = 'block';
+            document.getElementById('loggedin-video').style.display = 'none';
+        }
+        
+        // Function to animate typing effect - FIXED to prevent continuation issues
+        function typeWriter(text, element, speed = 50, index = 0) {
+            // Clear any existing timeouts to prevent continuation of old messages
+            if (currentTypingTimeout) {
+                clearTimeout(currentTypingTimeout);
+            }
+            
+            // Reset the element's contents when starting from the beginning
+            if (index === 0) {
+                element.innerHTML = '';
+            }
+            
+            if (index < text.length) {
+                // Check if we're at an HTML tag
+                if (text.charAt(index) === '<') {
+                    // Find the end of the tag
+                    const endIndex = text.indexOf('>', index);
+                    if (endIndex !== -1) {
+                        // Add the entire tag at once
+                        const tag = text.substring(index, endIndex + 1);
+                        element.innerHTML += tag;
+                        index = endIndex + 1;
+                    } else {
+                        // If no closing bracket, just add the character
+                        element.innerHTML += text.charAt(index);
+                        index++;
+                    }
+                } else {
+                    // Add one character
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                }
+                
+                // Store the timeout ID so we can clear it if needed
+                currentTypingTimeout = setTimeout(() => typeWriter(text, element, speed, index), speed);
+            } else {
+                // Hide the cursor when typing is complete
+                document.getElementById('typing-cursor').style.display = 'none';
+                
+                // Remove typing mode class when done
+                document.getElementById('ribbon-container').classList.remove('typing-mode');
+                
+                // Clear the typing timeout reference
+                currentTypingTimeout = null;
+            }
+        }
+
+        // Function to show message modal with ribbon unwrapping effect
+        function showMessage(index) {
+            const modal = document.getElementById('love-message-modal');
+            const messageText = document.getElementById('love-message');
+            const modalImageFront = document.getElementById('modal-image-front');
+            const modalImageBack = document.getElementById('modal-image-back');
+            const typingCursor = document.getElementById('typing-cursor');
+            const ribbonBox = document.getElementById('ribbon-box');
+            const ribbonContainer = document.getElementById('ribbon-container');
+            
+            // Clear any ongoing typing animation
+            if (currentTypingTimeout) {
+                clearTimeout(currentTypingTimeout);
+                currentTypingTimeout = null;
+            }
+            
+            // Reset the message content and ribbon state
+            messageText.innerHTML = '';
+            typingCursor.style.display = 'inline-block';
+            ribbonBox.classList.remove('unwrapped');
+            ribbonContainer.classList.remove('typing-mode');
+            
+            // Store the current index to reference the correct message
+            ribbonBox.dataset.messageIndex = index;
+            
+            // Set the images using our loveData array
+            modalImageFront.src = loveData[index].image;
+            modalImageBack.src = loveData[index].image;
+            
+            // Display the modal
+            modal.style.display = 'flex';
+            
+            // Create celebration effects
+            createConfetti();
+            createHearts();
+            
+            // Add click event to unwrap the ribbon
+            ribbonBox.onclick = function(event) {
+                // Prevent the click from triggering if it's on the close button
+                if (event.target.className === 'close-message-front') {
+                    return;
+                }
+                
+                if (!this.classList.contains('unwrapped')) {
+                    this.classList.add('unwrapped');
+                    
+                    // Start typing the message after the ribbon unwraps
+                    setTimeout(() => {
+                        // Add typing mode class to change background when typing begins
+                        ribbonContainer.classList.add('typing-mode');
+                        // Use the message from our loveData array
+                        typeWriter(loveData[index].message, messageText, 50);
+                    }, 1000); // Delay to let the unwrapping animation finish
+                }
+            };
+        }
+
+        // Close message modal
+        function closeMessage() {
+            document.getElementById('love-message-modal').style.display = 'none';
+            // Remove all confetti and hearts
+            document.querySelectorAll('.confetti, .floating-heart').forEach(el => el.remove());
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#ff4d6d', '#ff85a1', '#fbb1bd', '#ffd6e0', '#ffb3c1', '#ff1a4c'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Random properties
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.opacity = Math.random() * 0.6 + 0.4;
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                
+                // Different shapes
+                if (Math.random() > 0.6) {
+                    confetti.style.borderRadius = '50%';
+                } else if (Math.random() > 0.5) {
+                    confetti.style.transform = 'rotate(45deg)';
+                }
+                
+                document.body.appendChild(confetti);
+                
+                // Remove confetti after animation completes
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Create floating hearts using CSS hearts instead of emoji
+        function createHearts() {
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-icon floating-heart';
+                
+                // Random properties
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                heart.style.transform = 'scale(' + (Math.random() * 1.5 + 0.5) + ')';
+                heart.style.animationDuration = Math.random() * 5 + 3 + 's';
+                
+                document.body.appendChild(heart);
+                
+                // Remove heart after animation completes
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }
+        }
+
+        // Main window.onload function - consolidated from the multiple versions
+        window.onload = function() {
+            // First, load the images for the gallery
+            let images = [
+                'images/image1.jpeg',
+                'images/image2.jpeg',
+                'images/image3.jpeg',
+                'images/image4.jpeg',
+                'images/image5.jpeg',
+                'images/image6.jpeg',
+                'images/image7.jpeg',
+                'images/image8.jpeg',
+                'images/image9.jpeg',
+                'images/image10.jpeg',
+            ];
+
+            let gallery = document.getElementById('image-gallery');
+            // Clear the gallery first to avoid duplicate images
+            gallery.innerHTML = '';
+            
+            // Then add all images with secret message buttons
+            images.forEach((src, index) => {
+                let div = document.createElement('div');
+                div.className = 'image-container';
+
+                let img = document.createElement('img');
+                img.src = src;
+                
+                let btn = document.createElement('button');
+                btn.className = 'secret-message-btn';
+                btn.innerHTML = 'Secret Message <span class="heart-icon"></span>';
+                btn.onclick = function() { showMessage(index); };
+
+                div.appendChild(img);
+                div.appendChild(btn);
+                gallery.appendChild(div);
+            });
+
+            // Check login status and show appropriate screen
+            let isLoggedIn = localStorage.getItem("loggedIn") === "true";
+            
+            // Apply the correct visibility based on login status
+            if (isLoggedIn) {
+                showGallery();
+            } else {
+                showLogin();
+            }
+        };
+        // Consistent use of localStorage (or sessionStorage) for login persistence
+function login() {
+    let username = document.getElementById('username').value.trim();
+    let password = document.getElementById('password').value;
+
+    if (username !== "mylove") {
+        alert('Incorrect username! Try again.');
+        return;
+    }
+
+    if (password !== "love123") {
+        alert('Wrong Secret Code! Try Again');
+        return;
+    }
+
+    // Use sessionStorage instead of localStorage to make login session-based
+    sessionStorage.setItem("loggedIn", "true");
+    showGallery();
+}
+
+function logout() {
+    // Clear the login state from sessionStorage
+    sessionStorage.removeItem("loggedIn");
+    showLogin();
+}
+
+// Check login state using sessionStorage in window.onload
+window.onload = function() {
+    // Load images for the gallery
+    loadImages();
+    
+    // Check login status from sessionStorage instead of localStorage
+    let isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+    
+    if (isLoggedIn) {
+        showGallery();
+    } else {
+        showLogin();
+    }
+};
+
+function loadImages() {
+    let images = [
+        'images/image1.jpeg',
+        'images/image2.jpeg',
+        'images/image3.jpeg',
+        'images/image4.jpeg',
+        'images/image5.jpeg',
+        'images/image6.jpeg',
+        'images/image7.jpeg',
+        'images/image8.jpeg',
+        'images/image9.jpeg',
+        'images/image10.jpeg',
+    ];
+
+    let gallery = document.getElementById('image-gallery');
+    gallery.innerHTML = ''; // Clear existing images to prevent duplication
+
+    images.forEach((src, index) => {
+        let div = document.createElement('div');
+        div.className = 'image-container';
+
+        let img = document.createElement('img');
+        img.src = src;
+        img.alt = "Love Memory " + (index + 1);
+        
+        let btn = document.createElement('button');
+        btn.className = 'secret-message-btn';
+        btn.innerHTML = 'Secret Message <span class="heart-icon"></span>';
+        btn.onclick = function() { showMessage(index); };
+
+        div.appendChild(img);
+        div.appendChild(btn);
+        gallery.appendChild(div);
+    });
+}
+
+
+    </script>
+
+</body>
+</html>
